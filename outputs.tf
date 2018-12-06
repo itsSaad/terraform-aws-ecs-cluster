@@ -12,3 +12,8 @@ output "ecs_instance_role" {
   description = "The name of the ECS instance role."
   value       = "${aws_iam_role.ecs_instance_role.name}"
 }
+
+output "asg_security_group" {
+  description = "The name of the Security group attached to the ASG instances."
+  value       = "${aws_security_group.main.id}"
+}

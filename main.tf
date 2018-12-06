@@ -44,6 +44,10 @@ locals {
   cluster_name = "${var.name}-${var.environment}"
 }
 
+data "aws_vpc" "vpc" {
+  id = "${var.vpc_id}"
+}
+
 #
 # ECS
 #
@@ -116,6 +120,17 @@ resource "aws_security_group_rule" "main" {
   to_port     = 0
   protocol    = "-1"
   cidr_blocks = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "ingress" {
+  description       = "All VPC Traffic"
+  security_group_id = "${aws_security_group.main.id}"
+
+  type        = "ingress"
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  cidr_blocks = ["${data.aws_vpc.vpc.cidr_block}"]
 }
 
 #

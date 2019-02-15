@@ -51,3 +51,7 @@ variable "use_AmazonEC2ContainerServiceforEC2Role_policy" {
   type        = "string"
   default     = true
 }
+
+variable "keypair_name" {
+  default = ""
+}

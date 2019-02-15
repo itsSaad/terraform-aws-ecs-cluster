@@ -141,19 +141,19 @@ resource "aws_launch_configuration" "main" {
   name_prefix = "${format("ecs-%s-", local.cluster_name)}"
 
   iam_instance_profile = "${aws_iam_instance_profile.ecs_instance_profile.name}"
-
+  key_name 		      = "${var.keypair_name}"
   instance_type               = "${var.instance_type}"
   image_id                    = "${var.image_id}"
   associate_public_ip_address = false
   security_groups             = ["${aws_security_group.main.id}"]
 
   root_block_device {
-    volume_type = "standard"
+    volume_type = "gp2"
   }
 
   ebs_block_device {
     device_name = "/dev/xvdcz"
-    volume_type = "standard"
+    volume_type = "gp2"
     encrypted   = true
   }
 
